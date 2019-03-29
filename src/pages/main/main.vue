@@ -11,13 +11,13 @@
         <article>
             <!--lbox begin-->
             <div class="lbox">
-                <div class="zhuanti whitebg">
-                    <h2 class="htitle"><span class="hnav"><a href="/" target="_blank">更多</a></span>青青日记</h2>
+                <div class="zhuanti whitebg" v-for="(itemList,key) in allData" v-if="itemList.length>0">
+                    <h2 class="htitle"><span class="hnav"><a href="/" target="_blank">更多</a></span>{{itemList[0]['series_name']}}</h2>
                     <ul>
-                        <li><i class="ztpic"><a href="/" target="_blank"><img src="../../assets/images/1.jpg"></a></i>
-                            <b>个人博客模板《今夕何夕》-响应式个人...</b><span>个人博客模板《今夕何夕》，宽屏响应式个人博客模板，采用冷色系为主，固定导航栏和侧边栏，无缝滚动图片...</span><a
+                        <li v-for="item in itemList"><i class="ztpic"><a href="/" target="_blank"><img src="../../assets/images/1.jpg"></a></i>
+                            <b>{{item.title}}</b><span>{{item.content}}</span><a
                                 href="" target="_blank" class="readmore">文章阅读</a></li>
-                        <li><i class="ztpic"><a href="/" target="_blank"><img src="../../assets/images/2.jpg"></a></i>
+                        <!--<li><i class="ztpic"><a href="/" target="_blank"><img src="../../assets/images/2.jpg"></a></i>
                             <b>个人博客模板《今夕何夕》-响应式个人...</b><span>个人博客模板《今夕何夕》，宽屏响应式个人博客模板，采用冷色系为主，固定导航栏和侧边栏，无缝滚动图片...</span><a
                                 href="" target="_blank" class="readmore">文章阅读</a></li>
                         <li><i class="ztpic"><a href="/" target="_blank"><img src="../../assets/images/3.jpg"></a></i>
@@ -31,10 +31,10 @@
                                 href="" target="_blank" class="readmore">文章阅读</a></li>
                         <li><i class="ztpic"><a href="/" target="_blank"><img src="../../assets/images/h1.jpg"></a></i>
                             <b>个人博客模板《今夕何夕》-响应式个人...</b><span>个人博客模板《今夕何夕》，宽屏响应式个人博客模板，采用冷色系为主，固定导航栏和侧边栏，无缝滚动图片...</span><a
-                                href="" target="_blank" class="readmore">文章阅读</a></li>
+                                href="" target="_blank" class="readmore">文章阅读</a></li>-->
                     </ul>
                 </div>
-                <div class="zhuanti whitebg">
+                <!--<div class="zhuanti whitebg">
                     <h2 class="htitle"><span class="hnav"><a href="/" target="_blank">更多</a></span>美文欣赏</h2>
                     <ul>
                         <li><i class="ztpic"><a href="/" target="_blank"><img src="../../assets/images/1.jpg"></a></i>
@@ -102,7 +102,7 @@
                             <b>个人博客模板《今夕何夕》-响应式个人...</b><span>个人博客模板《今夕何夕》，宽屏响应式个人博客模板，采用冷色系为主，固定导航栏和侧边栏，无缝滚动图片...</span><a
                                 href="" target="_blank" class="readmore">文章阅读</a></li>
                     </ul>
-                </div>
+                </div>-->
 
                 <!--bloglist end-->
             </div>
@@ -111,14 +111,7 @@
                     <h2 class="htitle">文章分类</h2>
                     <section class="topnews imgscale"><img src="../../assets/images/h1.jpg"></section>
                     <ul>
-                        <li><i></i><a href="/">分类1</a></li>
-                        <li><i></i><a href="/">分类2</a></li>
-                        <li><i></i><a href="/">分类3</a></li>
-                        <li><i></i><a href="/">分类4</a></li>
-                        <li><i></i><a href="/">分类5</a></li>
-                        <li><i></i><a href="/">分类6</a></li>
-                        <li><i></i><a href="/">分类7</a></li>
-                        <li><i></i><a href="/">分类8</a></li>
+                        <li v-for="item in typeList"><i></i><a href="/">{{item['type_name']}}</a></li>
                     </ul>
                 </div>
 
@@ -153,17 +146,32 @@
 
     export default {
         name: 'main',
+        data() {
+            return {
+                allData: [],
+                typeList: []
+            }
+        },
         created() {
+            this.getArticleList();
+            this.getTypeList();
         },
         mounted() {
-            axios.get('http://172.31.11.221:3333/api/getNames').then((res) => {
-                console.log('-----', res.data);
-            });
-
-            axios.post('http://172.31.11.221:3333/api/getMoney').then((res) => {
-                console.log('-----', res.data);
-            });
-
+        },
+        methods:{
+            getArticleList() {
+                axios.get('http://172.31.11.221:3333/api/getArticleList').then((res) => {
+                    console.log('-----', res.data);
+                    this.allData = res.data['data'];
+                    console.log(this.allData);
+                });
+            },
+            getTypeList() {
+                axios.get('http://172.31.11.221:3333/api/getBlogType').then((res) => {
+                    console.log('-----', res.data);
+                    this.typeList = res.data['list'];
+                });
+            }
         }
     }
 </script>

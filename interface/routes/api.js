@@ -4,6 +4,7 @@ const router = express.Router();
 
 // 创建数据库连接
 const conn = mysql.createConnection({
+    multipleStatements: true,
     host: 'localhost',
     user: 'root',
     password: '',
@@ -19,21 +20,6 @@ router.all('*', function (req, res, next) {
     next();
 });
 
-router.get('/getNames', (req, res) => {
-    res.json({
-        err_code: 0,
-        message: 'success',
-        name: 'lisa'
-    });
-});
-router.post('/getMoney', (req, res) => {
-    res.json({
-        err_code: 0,
-        message: 'success',
-        name: '$50000'
-    });
-});
-
 router.get('/getBlogType', (req, res) => {
     const sqlStr = 'select * from blog_type';
     conn.query(sqlStr, (err, results) => {
@@ -47,6 +33,34 @@ router.get('/getBlogType', (req, res) => {
     });
 });
 
+router.get('/getBlogSeries', (req, res) => {
+    const sqlStr = 'select * from blog_series';
+    conn.query(sqlStr, (err, results) => {
+        if (err) return res.json({err_code: 1, message: '获取失败', err: err});
+        res.json({
+            err_code: 0,
+            message: '获取成功',
+            list: results,
+            affectedRows: 0
+        });
+    });
+});
+
+router.get('/getArticleList', (req, res)=>{
+    const sqlStr =
+        'select article_id as id, title, content,type_id,blog.series_id,series_name from blog,blog_series where blog.series_id=1 and blog.series_id=blog_series.series_id GROUP BY article_id;' +
+        'select article_id as id, title, content,type_id,blog.series_id,series_name from blog,blog_series where blog.series_id=2 and blog.series_id=blog_series.series_id GROUP BY article_id;' +
+        'select article_id as id, title, content,type_id,blog.series_id,series_name from blog,blog_series where blog.series_id=3 and blog.series_id=blog_series.series_id GROUP BY article_id;';
+    conn.query(sqlStr, (err, results) => {
+        if (err) return res.json({err_code: 1, message: '获取失败', err: err});
+        res.json({
+            err_code: 0,
+            message: '获取成功',
+            data: results,
+            affectedRows: 0
+        });
+    });
+});
 
 router.post('/writeArticle', (req, res)=>{
     const sqlStr = 'insert into blog set ?';

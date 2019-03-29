@@ -5,10 +5,18 @@
         </div>
         <mavon-editor v-model="content" :toolbars="toolbars" @keydown=""/>
         <div class="footer-box">
-            <label for="selectType">选择文章类型: </label>
-            <select name="selectType" id="selectType" v-model="blogType">
-                <option :value="item['type_id']" v-for="item in typeList">{{item['type_name']}}</option>
-            </select>
+            <div class="div1" v-if="typeList.length > 0">
+                <label for="selectType">选择文章类型: </label>
+                <select name="selectType" id="selectType" v-model="blogType">
+                    <option :value="item['type_id']" v-for="item in typeList">{{item['type_name']}}</option>
+                </select>
+            </div>
+            <div class="div2" v-if="seriesList.length > 0">
+                <label for="selectSeries">选择大类: </label>
+                <select name="selectSeries" id="selectSeries" v-model="blogSeries">
+                    <option :value="item['series_id']" v-for="item in seriesList">{{item['series_name']}}</option>
+                </select>
+            </div>
             <button class="btn-submit" @click="submitArticle()">提交</button>
         </div>
     </div>
@@ -24,7 +32,9 @@
                 title: '',
                 content: '',
                 blogType: '',
+                blogSeries: '',
                 typeList: [],
+                seriesList: [],
                 toolbars: {
                     bold: true, // 粗体
                     italic: true, // 斜体
@@ -51,33 +61,45 @@
             }
         },
         created() {
+            this.getTypeList();
+            this.getSeriesList();
         },
         mounted() {
-            this.getTypeList();
         },
         methods: {
             submitArticle() {
-                if (this.title && this.content && this.blogType) {
+                if (this.title && this.content && this.blogType && this.blogSeries) {
                     var params = new URLSearchParams();
                     params.append('title', this.title);
                     params.append('content', this.content);
                     params.append('type_id', this.blogType);
+                    params.append('series_id', this.blogSeries);
                     axios.post('http://172.31.11.221:3333/api/writeArticle', params).then((res) => {
                         console.log('-----', res.data);
                         alert(res.data['message']);
                         this.content = '';
                         this.title = '';
                         this.blogType = '';
+                        this.blogSeries = '';
                     });
                 } else {
-                    console.log(this.title, this.content, this.blogType);
-                    alert('文章信息未完成');
+                    console.log(this.title, this.content, this.blogType, this.blogSeries);
+                    if (!this.title) {alert('请填写文章标题'); return false};
+                    if (!this.content) {alert('请填写文章内容'); return false};
+                    if (!this.blogType) {alert('请选择文章类型'); return false};
+                    if (!this.blogSeries) {alert('请选择文章大类'); return false};
                 }
             },
             getTypeList() {
                 axios.get('http://172.31.11.221:3333/api/getBlogType').then((res) => {
                     console.log('-----', res.data);
-                    this.typeList = res.data['list']
+                    this.typeList = res.data['list'];
+                });
+            },
+            getSeriesList() {
+                axios.get('http://172.31.11.221:3333/api/getBlogSeries').then((res) => {
+                    console.log('-----', res.data);
+                    this.seriesList = res.data['list'];
                 });
             }
         }
