@@ -26,7 +26,6 @@ router.get('/getNames', (req, res) => {
         name: 'lisa'
     });
 });
-
 router.post('/getMoney', (req, res) => {
     res.json({
         err_code: 0,
@@ -35,8 +34,23 @@ router.post('/getMoney', (req, res) => {
     });
 });
 
+router.get('/getBlogType', (req, res) => {
+    const sqlStr = 'select * from blog_type';
+    conn.query(sqlStr, (err, results) => {
+        if (err) return res.json({err_code: 1, message: '获取失败', err: err});
+        res.json({
+            err_code: 0,
+            message: '获取成功',
+            list: results,
+            affectedRows: 0
+        });
+    });
+});
+
+
 router.post('/writeArticle', (req, res)=>{
     const sqlStr = 'insert into blog set ?';
+    console.log(req.body);
     conn.query(sqlStr, req.body, (err, results) => {
        if (err) return res.json({err_code: 1, message: '添加失败', err: err});
        if (results.affectedRows !== 1) return res.json({err_code: 2, message: '添加失败',});
