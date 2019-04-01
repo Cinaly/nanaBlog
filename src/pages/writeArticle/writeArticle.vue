@@ -1,23 +1,34 @@
 <template>
-    <div class="write-container">
-        <div class="title-box">
-            <span>标题: </span><input type="text" v-model="title">
-        </div>
-        <mavon-editor v-model="content" :toolbars="toolbars" @keydown=""/>
-        <div class="footer-box">
-            <div class="div1" v-if="typeList.length > 0">
-                <label for="selectType">选择文章类型: </label>
-                <select name="selectType" id="selectType" v-model="blogType">
-                    <option :value="item['type_id']" v-for="item in typeList">{{item['type_name']}}</option>
-                </select>
+    <div>
+        <!--top begin-->
+        <header id="header">
+            <div class="navbox">
+                <h2 id="mnavh"><span class="navicon"></span></h2>
+                <div class="logo">
+                    <a href="javascript:;" @click="goPage('index')">李思娜的个人博客</a>
+                </div>
             </div>
-            <div class="div2" v-if="seriesList.length > 0">
-                <label for="selectSeries">选择大类: </label>
-                <select name="selectSeries" id="selectSeries" v-model="blogSeries">
-                    <option :value="item['series_id']" v-for="item in seriesList">{{item['series_name']}}</option>
-                </select>
+        </header>
+        <div class="write-container">
+            <div class="title-box">
+                <span>标题: </span><input type="text" v-model="title">
             </div>
-            <button class="btn-submit" @click="submitArticle()">提交</button>
+            <mavon-editor v-model="content" :toolbars="toolbars" @keydown=""/>
+            <div class="footer-box">
+                <div class="div1" v-if="typeList.length > 0">
+                    <label for="selectType">选择文章类型: </label>
+                    <select name="selectType" id="selectType" v-model="blogType">
+                        <option :value="item['type_id']" v-for="item in typeList">{{item['type_name']}}</option>
+                    </select>
+                </div>
+                <div class="div2" v-if="seriesList.length > 0">
+                    <label for="selectSeries">选择大类: </label>
+                    <select name="selectSeries" id="selectSeries" v-model="blogSeries">
+                        <option :value="item['series_id']" v-for="item in seriesList">{{item['series_name']}}</option>
+                    </select>
+                </div>
+                <button class="btn-submit" @click="submitArticle()">提交</button>
+            </div>
         </div>
     </div>
 </template>
@@ -84,10 +95,26 @@
                     });
                 } else {
                     console.log(this.title, this.content, this.blogType, this.blogSeries);
-                    if (!this.title) {alert('请填写文章标题'); return false};
-                    if (!this.content) {alert('请填写文章内容'); return false};
-                    if (!this.blogType) {alert('请选择文章类型'); return false};
-                    if (!this.blogSeries) {alert('请选择文章大类'); return false};
+                    if (!this.title) {
+                        alert('请填写文章标题');
+                        return false
+                    }
+                    ;
+                    if (!this.content) {
+                        alert('请填写文章内容');
+                        return false
+                    }
+                    ;
+                    if (!this.blogType) {
+                        alert('请选择文章类型');
+                        return false
+                    }
+                    ;
+                    if (!this.blogSeries) {
+                        alert('请选择文章大类');
+                        return false
+                    }
+                    ;
                 }
             },
             getTypeList() {
@@ -101,15 +128,26 @@
                     console.log('-----', res.data);
                     this.seriesList = res.data['list'];
                 });
+            },
+            goPage(whichPage){
+                this.$router.push(whichPage);
             }
         }
     }
 </script>
+
+<style scoped>
+    @import '../../assets/base.css';
+</style>
+
 <style lang="scss" scoped>
     html, body, #app {
         height: 100%;
     }
 </style>
+
 <style lang="scss" scoped>
     @import "./writeArticle";
 </style>
+
+

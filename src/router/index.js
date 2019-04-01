@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/pages/HelloWorld/HelloWorld'
-import Main from '@/pages/main/main'
+import Index from '@/pages/index/index'
 import writeArticle from '@/pages/writeArticle/writeArticle'
+import articleDetail from '@/pages/articleDetail/articleDetail'
 
 Vue.use(Router)
 
@@ -14,14 +15,19 @@ export default new Router({
             component: HelloWorld
         },
         {
-            path: '/main',
-            name: 'main',
-            component: Main
+            path: '/index',
+            name: 'Index',
+            component: Index
         },
         {
             path: '/writeArticle',
             name: 'writeArticle',
             component: writeArticle
+        },
+        {
+            path: '/articleDetail',
+            name: 'articleDetail',
+            component: articleDetail
         },
     ]
 })

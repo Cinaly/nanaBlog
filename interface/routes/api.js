@@ -62,9 +62,23 @@ router.get('/getArticleList', (req, res)=>{
     });
 });
 
+router.get('/getArticleDetail', (req, res)=>{
+    const article_id = req.query['articleId'];
+    const sqlStr =
+        'select * from blog where article_id = ?';
+    conn.query(sqlStr, article_id, (err, results) => {
+        if (err) return res.json({err_code: 1, message: '获取失败', err: err});
+        res.json({
+            err_code: 0,
+            message: '获取成功',
+            articleDetail: results,
+            affectedRows: 0
+        });
+    });
+});
+
 router.post('/writeArticle', (req, res)=>{
     const sqlStr = 'insert into blog set ?';
-    console.log(req.body);
     conn.query(sqlStr, req.body, (err, results) => {
        if (err) return res.json({err_code: 1, message: '添加失败', err: err});
        if (results.affectedRows !== 1) return res.json({err_code: 2, message: '添加失败',});
