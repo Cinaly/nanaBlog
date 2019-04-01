@@ -21,7 +21,7 @@
                         <li v-for="item in itemList">
                             <i class="ztpic">
                                 <a href="javascript:;" @click="goToDetail(item['id'])">
-                                    <img src="../../assets/images/1.jpg">
+                                    <img :src="require('../../assets/images/' + getRandomImg() +'.jpg')">
                                 </a>
                             </i>
                             <b>{{item.title}}</b>
@@ -145,7 +145,12 @@
         data() {
             return {
                 allData: [],
-                typeList: []
+                typeList: [],
+                imgLists: ['1', '2', '3', '4',
+                    'b01', 'b02', 'b03', 'b04', 'b05',
+                    'h1', 'h2',
+                    'text01', 'text02', 'text03', 'text04', 'text05', 'text06', 'text07',
+                ]
             }
         },
         created() {
@@ -176,8 +181,15 @@
                     }
                 });
             },
-            goWritePage(){
+            goWritePage() {
                 this.$router.push('writeArticle');
+            },
+            getRandomImg() {
+                var min = Math.ceil(1);
+                var max = Math.floor(this.imgLists.length);
+                var randomNumber = Math.floor(Math.random() * (max - min)) + min;
+                console.log(randomNumber);
+                return this.imgLists[randomNumber];
             }
         }
     }

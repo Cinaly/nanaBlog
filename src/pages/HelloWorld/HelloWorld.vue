@@ -80,6 +80,7 @@
         </a>
       </li>
     </ul>
+      <h2><router-link to="index">去博客瞅一眼</router-link></h2>
   </div>
 </template>
 
