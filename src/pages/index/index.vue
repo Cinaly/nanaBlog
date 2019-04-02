@@ -1,32 +1,22 @@
 <template>
     <div>
-        <!--top begin-->
-        <header id="header">
-            <div class="navbox">
-                <h2 id="mnavh"><span class="navicon"></span></h2>
-                <div class="logo">
-                    <a href="http://www.yangqq.com">李思娜的个人博客</a>
-                    <a href="javascript:;" class="btn-gowrite" @click="goWritePage()">写博客</a>
-                </div>
-            </div>
-        </header>
-        <!--top end-->
+        <my-header canWrite="true"></my-header>
         <article>
             <!--lbox begin-->
             <div class="lbox">
                 <div class="zhuanti whitebg" v-for="(itemList,key) in allData" v-if="itemList.length>0">
-                    <h2 class="htitle"><span class="hnav"><a href="/" target="_blank">更多</a></span>{{itemList[0]['series_name']}}
+                    <h2 class="htitle"><span class="hnav"><a href="javascript:;" @click="jumpWithParams('/articleForSeriesList', itemList[0]['series_id'])">更多</a></span>{{itemList[0]['series_name']}}
                     </h2>
                     <ul>
                         <li v-for="item in itemList">
                             <i class="ztpic">
-                                <a href="javascript:;" @click="goToDetail(item['id'])">
+                                <a href="javascript:;" @click="jumpWithParams('/articleDetail', item['id'])">
                                     <img :src="require('../../assets/images/' + getRandomImg() +'.jpg')">
                                 </a>
                             </i>
                             <b>{{item.title}}</b>
                             <span>{{item.content}}</span>
-                            <a href="javascript:;" class="readmore" @click="goToDetail(item['id'])">文章阅读</a>
+                            <a href="javascript:;" class="readmore" @click="jumpWithParams('/articleDetail', item['id'])">文章阅读</a>
                         </li>
                     </ul>
                 </div>
@@ -139,9 +129,14 @@
 
 <script>
     import axios from 'axios';
+    import {HOST} from '@/host/index';
+    import myHeader from '@/component/header/my_header';
 
     export default {
         name: 'index',
+        components:{
+            myHeader
+        },
         data() {
             return {
                 allData: [],
@@ -161,23 +156,23 @@
         },
         methods: {
             getArticleList() {
-                axios.get('http://172.31.11.221:3333/api/getArticleList').then((res) => {
+                axios.get(HOST['CONFIG_URL_API'] + '/api/getArticleList').then((res) => {
                     console.log('-----', res.data);
                     this.allData = res.data['data'];
                     console.log(this.allData);
                 });
             },
             getTypeList() {
-                axios.get('http://172.31.11.221:3333/api/getBlogType').then((res) => {
+                axios.get(HOST['CONFIG_URL_API'] + '/api/getBlogType').then((res) => {
                     console.log('-----', res.data);
                     this.typeList = res.data['list'];
                 });
             },
-            goToDetail(article_id) {
+            jumpWithParams(path, value) {
                 this.$router.push({
-                    path: '/articleDetail',
+                    path: path,
                     query: {
-                        articleId: article_id
+                        id: value
                     }
                 });
             },
@@ -197,9 +192,4 @@
 
 <style scoped>
     @import '../../assets/base.css';
-</style>
-<style lang="scss" scoped>
-    .btn-gowrite {
-        float: right;
-    }
 </style>

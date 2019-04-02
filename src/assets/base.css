@@ -10,23 +10,22 @@ a:hover { color: #000; text-decoration: none; }
 .clearblank { clear: both; width: 100%; overflow: hidden; }
 .fl { float: left!important; }
 .fr { float: right!important; }
-.box, article { width: 1200px; margin: auto; overflow: hidden }
+.box, article { width: calc(100% - 40px); margin: auto; overflow: hidden }
 article {margin-top: 20px;}
-.navbox { width: 1200px; margin: auto; }
+
 .mt20 { margin-top: 20px; }
 .blue { color: #00C1DE }
 /*header*/
-header { width: 1200px;
-    padding: 5px 0;
+header { width: 100%;
     margin: auto;
     position: relative;
     box-sizing: border-box;
     overflow: hidden;
-    background: #1C2327;
-    height: 65px; }
-header::before { background: #000 linear-gradient(to left, #4cd964, #5ac8fa, #007aff, #34aadc, #5856d6, #ff2d55); content: ""; height: 5px; position: absolute; top: 0; width: 100%; }
-.logo { padding:0 20px; line-height: 60px; color: #FFF; font-size: 22px }
-.logo a { color: #FFF }
+    background: #fff;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.05);
+    height: 60px; }
+.logo { padding:0 20px; line-height: 60px; color: #333; font-size: 22px }
+.logo a { color: #333 }
 .logo img { margin-top: 14px; }
 .imgscale img { width: 100%; -moz-transition: all .5s ease; -webkit-transition: all .5s ease; -ms-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; transition: all 0.5s; }
 .imgscale:hover img { transform: scale(1.1); }
@@ -46,7 +45,6 @@ nav { float: left; height: 50px; line-height: 50px; text-align: center; }
 /*箭头*/
 .menu:before { position: absolute; content: ""; top: 22px; right: 5px; background: url(./images/jt.png) no-repeat; width: 8px; height: 8px; -ms-transition: all .5s ease; -moz-transition: all .5s ease; -webkit-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; }
 .menu:hover:before { transform: rotate(180deg) }/*旋转*/
-#mnavh { display: none; margin: 5px 0 0 0; width: 24px; height: 40px; float: right; text-align: center; padding: 0 10px; }
 .navicon { display: block; position: relative; width: 30px; height: 5px; background-color: #fff; margin-top: 20px; }
 .navicon:before, .navicon:after { content: ''; display: block; width: 30px; height: 5px; position: absolute; background: #fff; -webkit-transition-property: margin, -webkit-transform; transition-property: margin, -webkit-transform; transition-property: margin, transform; transition-property: margin, transform, -webkit-transform; -webkit-transition-duration: 300ms; transition-duration: 300ms; }
 .navicon:before { margin-top: -10px; }
@@ -59,7 +57,7 @@ nav { float: left; height: 50px; line-height: 50px; text-align: center; }
 .menu span { display: none; width: 50px; height: 50px; background: #12b7de; opacity: 0.5; position: absolute; top: 0; right: 0; border-left: #49ccea 1px solid; }
 /*search*/
 .searchico { margin-top: 5px; width: 39px; height: 39px; float: right; display: inline; cursor: pointer; background: url(./images/bg.png) no-repeat center !important; }
-.searchbox { width: 1200px; margin: 10px auto; overflow: hidden; background: #ffffff; position: relative; }
+.searchbox { width: 100%; margin: 10px auto; overflow: hidden; background: #ffffff; position: relative; }
 .search { width: 50%; margin: 20px auto; background: #222; border-radius: 0 5px 5px 0; position: relative; border: #ccc 1px solid; display: none; }
 .search input.input_submit { border: 0; background: 0; color: #fff; outline: none; position: absolute; top: 10px; right: 10% }
 .search input.input_text { border: 0; line-height: 36px; height: 36px; width: 72%; padding-left: 10px; outline: none }
@@ -141,7 +139,7 @@ nav { float: left; height: 50px; line-height: 50px; text-align: center; }
 .ztpic { width: 100%; height: 100px; overflow: hidden; border-radius: 3px; background: #CCC; display: block }
 .ztpic img { display: inline-block; width: 100%; min-height: 100%; height: auto; vertical-align: middle; transition: all .5s ease-out .1s; }
 .zhuanti li b { display: block; width: 100%; overflow: hidden; height: 30px; line-height: 30px; margin: 10px 0; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
-.zhuanti li span { color: #999; overflow: hidden; text-overflow: ellipsis; -webkit-box-orient: vertical; display: -webkit-box; -webkit-line-clamp: 3; font-size: 14px; height: 60px; }
+.zhuanti li span { color: #999; overflow: hidden; text-overflow: ellipsis; -webkit-box-orient: vertical; display: -webkit-box; -webkit-line-clamp: 3; font-size: 14px; height: 54px; }
 .readmore { margin: 10px 0 0 0; color: #096; display: block; }
 .readmore:before { content: "+"; color: #063 }
 .zhuanti li:hover { background: #fff; box-shadow: #ccc 1px 1px 8px; }

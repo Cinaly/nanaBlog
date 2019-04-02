@@ -4,6 +4,7 @@ import HelloWorld from '@/pages/HelloWorld/HelloWorld'
 import Index from '@/pages/index/index'
 import writeArticle from '@/pages/writeArticle/writeArticle'
 import articleDetail from '@/pages/articleDetail/articleDetail'
+import articleForSeriesList from '@/pages/articleForSeriesList/articleForSeriesList'
 
 Vue.use(Router)
 
@@ -29,5 +30,10 @@ export default new Router({
             name: 'articleDetail',
             component: articleDetail
         },
+        {
+            path: '/articleForSeriesList',
+            name: 'articleForSeriesList',
+            component: articleForSeriesList
+        }
     ]
 })

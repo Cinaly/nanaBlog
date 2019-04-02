@@ -1,14 +1,6 @@
 <template>
     <div>
-        <!--top begin-->
-        <header id="header">
-            <div class="navbox">
-                <h2 id="mnavh"><span class="navicon"></span></h2>
-                <div class="logo">
-                    <a href="javascript:;" @click="goPage('index')">李思娜的个人博客</a>
-                </div>
-            </div>
-        </header>
+        <my-header></my-header>
         <div class="write-container">
             <div class="title-box">
                 <span>标题: </span><input type="text" v-model="title">
@@ -35,9 +27,13 @@
 
 <script>
     import axios from 'axios';
+    import myHeader from '@/component/header/my_header';
 
     export default {
         name: 'writeArticle',
+        components:{
+            myHeader
+        },
         data() {
             return {
                 title: '',

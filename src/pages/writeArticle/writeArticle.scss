@@ -1,11 +1,14 @@
 .write-container{
     padding: 50px;
+    color: #fff;
+    min-height: calc(100vh - 160px);
     .title-box {
         height: 44px;
         display: flex;
         span{
             line-height: 44px;
             margin-right: 20px;
+            color: #fff;
         }
         input{
             line-height: 44px;
@@ -28,5 +31,6 @@
     }
     .btn-submit{
         float: right;
+        padding: 0 30px;
     }
 }

@@ -12,10 +12,13 @@
 
 <style>
     #app {
-        font-family: 'Avenir', Helvetica, Arial, sans-serif;
+        font-family: PingFang SC,Hiragino Sans GB,Arial,Microsoft YaHei,Verdana,Roboto,Noto,Helvetica Neue,sans-serif !important;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         color: #333;
-        background: #E9EAED;
+        min-width: 1070px;
+        font-size: 18px;
+        background: url("./assets/images/bg.jpg");
     }
+
 </style>

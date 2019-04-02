@@ -1,15 +1,6 @@
 <template>
-    <div>
-        <!--top begin-->
-        <header id="header">
-            <div class="navbox">
-                <h2 id="mnavh"><span class="navicon"></span></h2>
-                <div class="logo">
-                    <a href="javascript:;" @click="goPage('index')">李思娜的个人博客</a>
-                    <a href="javascript:;" class="btn-gowrite" @click="goPage('writeArticle')">写博客</a>
-                </div>
-            </div>
-        </header>
+    <div class="articlewrite-container">
+        <my-header canWrite="true"></my-header>
         <div class="write-container">
             <div class="title-box">
                 <span>{{articleDetail.title}} </span>
@@ -29,10 +20,13 @@
 
 <script>
     import axios from 'axios';
-    import {urlParamsToJson} from '@/utils/urlParamsToJson.util';
+    import myHeader from '@/component/header/my_header';
 
     export default {
         name: 'writeArticle',
+        components:{
+            myHeader
+        },
         data() {
             return {
                 articleDetail: '',
@@ -40,7 +34,7 @@
             }
         },
         created() {
-            this.articleId = this.$route.query['articleId'];
+            this.articleId = this.$route.query['id'];
         },
         mounted() {
             this.getArticleDetail();
@@ -75,18 +69,7 @@
         }
     }
 </script>
-<style scoped>
-    @import '../../assets/base.css';
-</style>
 
-<style lang="scss" scoped>
-    html, body, #app {
-        height: 100%;
-    }
-    .btn-gowrite {
-        float: right;
-    }
-</style>
 <style lang="scss" scoped>
     @import "./articleDetail";
 </style>

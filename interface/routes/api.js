@@ -46,22 +46,6 @@ router.get('/getBlogSeries', (req, res) => {
     });
 });
 
-router.get('/getArticleList', (req, res)=>{
-    const sqlStr =
-        'select article_id as id, title, content,type_id,blog.series_id,series_name from blog,blog_series where blog.series_id=1 and blog.series_id=blog_series.series_id GROUP BY article_id;' +
-        'select article_id as id, title, content,type_id,blog.series_id,series_name from blog,blog_series where blog.series_id=2 and blog.series_id=blog_series.series_id GROUP BY article_id;' +
-        'select article_id as id, title, content,type_id,blog.series_id,series_name from blog,blog_series where blog.series_id=3 and blog.series_id=blog_series.series_id GROUP BY article_id;';
-    conn.query(sqlStr, (err, results) => {
-        if (err) return res.json({err_code: 1, message: '获取失败', err: err});
-        res.json({
-            err_code: 0,
-            message: '获取成功',
-            data: results,
-            affectedRows: 0
-        });
-    });
-});
-
 router.get('/getArticleDetail', (req, res)=>{
     const article_id = req.query['articleId'];
     const sqlStr =
@@ -89,5 +73,37 @@ router.post('/writeArticle', (req, res)=>{
         });
     });
 });
+
+router.get('/getArticleList', (req, res)=>{
+    const series_id = req.query['seriesId'];
+    const type_id = req.query['typeId'];
+    console.log(series_id, type_id);
+    let varId = '';
+    let sqlStr =
+        'select article_id as id, title, content,type_id,blog.series_id,series_name from blog,blog_series where blog.series_id=1 and blog.series_id=blog_series.series_id GROUP BY article_id;' +
+        'select article_id as id, title, content,type_id,blog.series_id,series_name from blog,blog_series where blog.series_id=2 and blog.series_id=blog_series.series_id GROUP BY article_id;' +
+        'select article_id as id, title, content,type_id,blog.series_id,series_name from blog,blog_series where blog.series_id=3 and blog.series_id=blog_series.series_id GROUP BY article_id;';
+    
+    if(series_id){
+        sqlStr = 'select article_id,content, title, series_name from blog,blog_series where blog.series_id = ? and blog.series_id = blog_series.series_id';
+        varId = series_id;
+    }
+    
+    if(type_id){
+        sqlStr = 'select article_id,content, title, type_name from blog,blog_type where blog.type_id = ? and blog.type_id = blog_type.type_id';
+        varId = type_id;
+    }
+    
+    conn.query(sqlStr, varId, (err, results) => {
+        if (err) return res.json({err_code: 1, message: '获取失败', err: err});
+        res.json({
+            err_code: 0,
+            message: '获取成功',
+            data: results,
+            affectedRows: 0
+        });
+    });
+});
+
 
 module.exports = router;
