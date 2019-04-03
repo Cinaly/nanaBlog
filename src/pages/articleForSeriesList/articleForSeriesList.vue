@@ -9,11 +9,13 @@
             margin: 20px;
             li {
                 border-bottom: 1px solid #f4f4f4;
+                cursor: pointer;
                 &:first-child {
                     font-size: 30px;
                     font-weight: bold;
                     color: #ffa200;
                     padding-bottom: 20px;
+                    border-bottom: 2px solid #d5d5d5;
                 }
             }
             h2 {
