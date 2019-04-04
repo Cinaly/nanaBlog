@@ -16,7 +16,7 @@
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         color: #333;
-        min-width: 1070px;
+        min-width: 750px;
         font-size: 18px;
         background: url("./assets/images/bg.jpg");
     }

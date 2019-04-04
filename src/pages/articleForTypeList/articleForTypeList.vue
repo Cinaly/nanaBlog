@@ -44,9 +44,15 @@
                     }
                     h2 {
                         font-size: 18px;
+                        margin: 0;
+                        display: inline-block;
+                        &:hover {
+                            color: #cf2730;
+                        }
                     }
                     p {
                         color: #8a8a8a;
+                        margin: 5px 0;
                         font-size: 14px;
                         line-height: 24px;
                         overflow: hidden;
