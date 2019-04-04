@@ -15,7 +15,8 @@
                 </div>
                 <div class="div2" v-if="seriesList.length > 0">
                     <label for="selectSeries">选择大类: </label>
-                    <select name="selectSeries" id="selectSeries" v-model="blogSeries">
+                    <select name="selectSeries" id="selectSeries"
+                            v-model="blogSeries">
                         <option :value="item['series_id']" v-for="item in seriesList">{{item['series_name']}}</option>
                     </select>
                 </div>
@@ -31,7 +32,7 @@
 
     export default {
         name: 'writeArticle',
-        components:{
+        components: {
             myHeader
         },
         data() {
@@ -40,6 +41,7 @@
                 content: '',
                 blogType: '',
                 blogSeries: '',
+                articleId: '',
                 typeList: [],
                 seriesList: [],
                 toolbars: {
@@ -68,50 +70,69 @@
             }
         },
         created() {
+            this.articleId = this.$route.query['id'];
+        },
+        mounted() {
+            if (this.articleId) {
+                this.getArticleDetail(this.articleId);
+            }
             this.getTypeList();
             this.getSeriesList();
         },
-        mounted() {
-        },
         methods: {
+            getArticleDetail(articleId) {
+                axios.get('http://172.31.11.221:3333/api/getArticleDetail', {
+                    params: {
+                        'articleId': articleId
+                    }
+                }).then((res) => {
+                    var articleDetail = res.data['articleDetail'][0];
+                    this.title = articleDetail['title'];
+                    this.content = articleDetail['content'];
+                    this.blogType = articleDetail['series_id'];
+                    this.blogSeries = articleDetail['type_id'];
+                    console.log('-----', this.articleDetail);
+                }).catch((err) => {
+                    console.log(err);
+                });
+            },
             submitArticle() {
-                if (this.title && this.content && this.blogType && this.blogSeries) {
-                    var params = new URLSearchParams();
-                    params.append('title', this.title);
-                    params.append('content', this.content);
-                    params.append('type_id', this.blogType);
-                    params.append('series_id', this.blogSeries);
-                    axios.post('http://172.31.11.221:3333/api/writeArticle', params).then((res) => {
-                        console.log('-----', res.data);
-                        alert(res.data['message']);
-                        this.content = '';
-                        this.title = '';
-                        this.blogType = '';
-                        this.blogSeries = '';
-                    });
-                } else {
-                    console.log(this.title, this.content, this.blogType, this.blogSeries);
-                    if (!this.title) {
-                        alert('请填写文章标题');
-                        return false
-                    }
-                    ;
-                    if (!this.content) {
-                        alert('请填写文章内容');
-                        return false
-                    }
-                    ;
-                    if (!this.blogType) {
-                        alert('请选择文章类型');
-                        return false
-                    }
-                    ;
-                    if (!this.blogSeries) {
-                        alert('请选择文章大类');
-                        return false
-                    }
-                    ;
+                if (!this.title) {
+                    alert('请填写文章标题');
+                    return false
                 }
+                if (!this.content) {
+                    alert('请填写文章内容');
+                    return false
+                }
+                if (!this.blogType) {
+                    alert('请选择文章类型');
+                    return false
+                }
+                if (!this.blogSeries) {
+                    alert('请选择文章大类');
+                    return false
+                }
+
+                var params = new URLSearchParams();
+                var urlStr = 'http://172.31.11.221:3333/api/writeArticle';
+                if (this.articleId) {
+                    urlStr = 'http://172.31.11.221:3333/api/updateArticle';
+                    params.append('article_id', this.articleId);
+                }
+
+                params.append('title', this.title);
+                params.append('content', this.content);
+                params.append('type_id', this.blogType);
+                params.append('series_id', this.blogSeries);
+                axios.post(urlStr, params).then((res) => {
+                    console.log('-----', res.data);
+                    alert(res.data['message']);
+                    if (res.data['err_code'] == 0) {
+                        this.goPage('index');
+                    }
+                });
+
             },
             getTypeList() {
                 axios.get('http://172.31.11.221:3333/api/getBlogType').then((res) => {
@@ -125,7 +146,7 @@
                     this.seriesList = res.data['list'];
                 });
             },
-            goPage(whichPage){
+            goPage(whichPage) {
                 this.$router.push(whichPage);
             }
         }

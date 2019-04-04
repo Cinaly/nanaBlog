@@ -1,6 +1,6 @@
-.articlewrite-container{
+.articlewrite-container {
     padding-bottom: 30px;
-    .write-container{
+    .write-container {
         margin: 50px 50px 0;
         background: #fff;
         .title-box {
@@ -9,30 +9,48 @@
             font-weight: 700;
             padding: 25px;
             display: flex;
-            span{
+            justify-content: space-between;
+            span {
                 line-height: 44px;
                 margin-right: 20px;
             }
-            input{
+            input {
                 line-height: 44px;
                 flex: 1;
                 padding: 0 16px;
             }
+            .edit-btn,.delete-btn {
+                text-decoration: none;
+                color: #cf2730;
+                font-weight: normal;
+                font-size: 18px;
+                line-height: 44px;
+                padding: 0 5px;
+                &:hover {
+                    color: #FF0000;
+                }
+            }
+            .delete-btn{
+                color: #bbb;
+                &:hover {
+                    color: #666;
+                }
+            }
         }
-        .markdown-body{
+        .markdown-body {
             margin: 20px 0;
         }
-        .footer-box{
+        .footer-box {
             height: 30px;
             * {
                 height: 30px;
             }
-            .div1,.div2{
+            .div1, .div2 {
                 display: inline-block;
                 margin-right: 30px;
             }
         }
-        .btn-submit{
+        .btn-submit {
             float: right;
         }
     }

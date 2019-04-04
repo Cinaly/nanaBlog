@@ -4,6 +4,10 @@
         <div class="write-container">
             <div class="title-box">
                 <span>{{articleDetail.title}} </span>
+                <div>
+                    <a class="delete-btn" href="javascript:;" @click="deleteArticle()">删除</a>
+                    <a class="edit-btn" href="javascript:;" @click="jumpWithParams('/writeArticle', articleId)">编辑</a>
+                </div>
             </div>
             <mavon-editor
                 class="md"
@@ -24,7 +28,7 @@
 
     export default {
         name: 'writeArticle',
-        components:{
+        components: {
             myHeader
         },
         data() {
@@ -40,7 +44,7 @@
             this.getArticleDetail();
         },
         computed: {
-            prop () {
+            prop() {
                 let data = {
                     subfield: false,// 单双栏模式
                     defaultOpen: 'preview',//edit： 默认展示编辑区域 ， preview： 默认展示预览区域
@@ -54,17 +58,42 @@
         methods: {
             getArticleDetail() {
                 var articleId = this.articleId;
-                axios.get('http://172.31.11.221:3333/api/getArticleDetail', {params:{
+                axios.get('http://172.31.11.221:3333/api/getArticleDetail', {
+                    params: {
                         'articleId': articleId
-                }}).then((res) => {
+                    }
+                }).then((res) => {
                     this.articleDetail = res.data['articleDetail'][0];
                     console.log('-----', this.articleDetail);
-                }).catch((err)=>{
+                }).catch((err) => {
                     console.log(err);
                 });
             },
-            goPage(whichPage){
+            deleteArticle() {
+                var articleId = this.articleId;
+                axios.get('http://172.31.11.221:3333/api/deleteArticle', {
+                    params: {
+                        'articleId': articleId
+                    }
+                }).then((res) => {
+                    alert(res.data['message']);
+                    if (res.data['err_code'] == 0) {
+                        this.goPage('index');
+                    }
+                }).catch((err) => {
+                    console.log(err);
+                });
+            },
+            goPage(whichPage) {
                 this.$router.push(whichPage);
+            },
+            jumpWithParams(path, value) {
+                this.$router.push({
+                    path: path,
+                    query: {
+                        id: value
+                    }
+                });
             }
         }
     }

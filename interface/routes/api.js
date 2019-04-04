@@ -74,23 +74,47 @@ router.post('/writeArticle', (req, res) => {
     });
 });
 
+router.post('/updateArticle', (req, res) => {
+    const sqlStr = 'update blog set title = ?, content = ?, type_id = ?, series_id = ? where article_id = ?';
+    conn.query(sqlStr, [
+        req.body.title,
+        req.body.content,
+        req.body.type_id,
+        req.body.series_id,
+        req.body.article_id,
+    ], (err, results) => {
+        if (err) return res.json({err_code: 1, message: '编辑失败', err: err});
+        if (results.affectedRows !== 1) return res.json({err_code: 2, message: '编辑失败',});
+        res.json({
+            err_code: 0,
+            message: '编辑成功',
+            affectedRows: results.affectedRows
+        });
+    });
+});
+
 router.get('/getArticleList', (req, res) => {
     const series_id = req.query['seriesId'];
     const type_id = req.query['typeId'];
     console.log(series_id, type_id);
     let varId = '';
     let sqlStr =
-        'select article_id as id, title, content,type_id,blog.series_id,series_name from blog,blog_series where blog.series_id=1 and blog.series_id=blog_series.series_id GROUP BY article_id;' +
-        'select article_id as id, title, content,type_id,blog.series_id,series_name from blog,blog_series where blog.series_id=2 and blog.series_id=blog_series.series_id GROUP BY article_id;' +
-        'select article_id as id, title, content,type_id,blog.series_id,series_name from blog,blog_series where blog.series_id=3 and blog.series_id=blog_series.series_id GROUP BY article_id;';
+        'select article_id as id, title, content,type_id,blog.series_id,series_name from blog,blog_series ' +
+        'where is_delete=0 and blog.series_id=1 and blog.series_id=blog_series.series_id GROUP BY article_id;' +
+        'select article_id as id, title, content,type_id,blog.series_id,series_name from blog,blog_series ' +
+        'where is_delete=0 and blog.series_id=2 and blog.series_id=blog_series.series_id GROUP BY article_id;' +
+        'select article_id as id, title, content,type_id,blog.series_id,series_name from blog,blog_series ' +
+        'where is_delete=0 and blog.series_id=3 and blog.series_id=blog_series.series_id GROUP BY article_id;';
     
     if (series_id) {
-        sqlStr = 'select article_id,content, title, series_name from blog,blog_series where blog.series_id = ? and blog.series_id = blog_series.series_id';
+        sqlStr = 'select article_id,content, title, series_name from blog,blog_series ' +
+            'where is_delete=0 and blog.series_id = ? and blog.series_id = blog_series.series_id';
         varId = series_id;
     }
     
     if (type_id) {
-        sqlStr = 'select article_id,content, title, type_name from blog,blog_type where blog.type_id = ? and blog.type_id = blog_type.type_id';
+        sqlStr = 'select article_id,content, title, type_name from blog,blog_type ' +
+            'where is_delete=0 and blog.type_id = ? and blog.type_id = blog_type.type_id';
         varId = type_id;
     }
     
@@ -115,6 +139,21 @@ router.get('/searchArticle', (req, res) => {
             err_code: 0,
             message: '获取成功',
             list: results,
+            affectedRows: 0
+        });
+    });
+});
+
+router.get('/deleteArticle', (req, res) => {
+    const article_id = req.query['articleId'];
+    const sqlStr =
+        'update blog set is_delete=1 where article_id = ?';
+    conn.query(sqlStr, article_id, (err, results) => {
+        if (err) return res.json({err_code: 1, message: '删除失败', err: err});
+        res.json({
+            err_code: 0,
+            message: '删除成功',
+            result: results,
             affectedRows: 0
         });
     });
