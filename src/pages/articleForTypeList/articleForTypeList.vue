@@ -44,7 +44,7 @@
                     }
                     h2 {
                         font-size: 18px;
-                        margin: 0;
+                        margin: 5px 0;
                         display: inline-block;
                         &:hover {
                             color: #cf2730;

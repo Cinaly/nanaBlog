@@ -106,7 +106,18 @@ router.get('/getArticleList', (req, res) => {
 });
 
 router.get('/searchArticle', (req, res) => {
-
+    const key = req.query['key'];
+    const sqlStr =
+        'select article_id, title from blog where title like ?';
+    conn.query(sqlStr, '%' + key + '%', (err, results) => {
+        if (err) return res.json({err_code: 1, message: '获取失败', err: err});
+        res.json({
+            err_code: 0,
+            message: '获取成功',
+            list: results,
+            affectedRows: 0
+        });
+    });
 });
 
 router.get('/getTags', (req, res) => {
