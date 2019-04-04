@@ -97,7 +97,7 @@
                     <h2 class="htitle">文章分类</h2>
                     <section class="topnews imgscale"><img src="../../assets/images/h1.jpg"></section>
                     <ul>
-                        <li v-for="item in typeList"><i></i><a href="/">{{item['type_name']}}</a></li>
+                        <li v-for="item in typeList"><i></i><a href="javascript:;" @click="jumpWithParams('/articleForTypeList', item['type_id'])">{{item['type_name']}}</a></li>
                     </ul>
                 </div>
 

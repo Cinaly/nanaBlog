@@ -72,6 +72,7 @@
         },
         mounted() {
             this.getArticleList();
+            this.mod('3214282912345698765432161182', 97, 9);
         },
         methods: {
             getArticleList() {
@@ -93,6 +94,29 @@
                         id: value
                     }
                 });
+            },
+            /*
+            * number1 需要计算的数字
+            * number2 对该数字取模
+            * number3 分布计算时截几位
+            * */
+            mod(number1, number2, number3) {
+                console.log(number1, number2, number3);
+                var mod1 = number1 % number2;
+                var mod2;
+                var len = number1.length;
+                var tt = Math.ceil(len / number3);
+                var N = parseInt(number1.substring(0, number3)) % number2;
+                if (tt >= 2) {
+                    for (var i = 1; i < tt; i++) {
+                        console.log(N, number1.substring(i * number3, i * number3 + number3),
+                            N + number1.substring(i * number3, i * number3 + number3));
+                        N = parseInt(N + number1.substring(i * number3, i * number3 + number3)) % number2;
+                        console.log(N);
+                    }
+                }
+                mod2 = N;
+                console.log(mod1, mod2, Math.pow(2, 53));
             }
         }
     }

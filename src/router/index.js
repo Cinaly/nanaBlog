@@ -5,6 +5,7 @@ import Index from '@/pages/index/index'
 import writeArticle from '@/pages/writeArticle/writeArticle'
 import articleDetail from '@/pages/articleDetail/articleDetail'
 import articleForSeriesList from '@/pages/articleForSeriesList/articleForSeriesList'
+import articleForTypeList from '@/pages/articleForTypeList/articleForTypeList'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
             path: '/articleForSeriesList',
             name: 'articleForSeriesList',
             component: articleForSeriesList
+        },
+        {
+            path: '/articleForTypeList',
+            name: 'articleForTypeList',
+            component: articleForTypeList
         }
     ]
 })
