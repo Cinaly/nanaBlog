@@ -12,9 +12,7 @@
             <mavon-editor v-model="content" :toolbars="toolbars" @keydown=""/>
             <div class="footer-box">
                 <div class="div1" v-if="typeList.length > 0">
-                    <label>选择文章类型: </label>
-
-                    <el-select v-model="blogType" placeholder="请选择">
+                    <el-select v-model="blogType" placeholder="选择文章类型">
                         <el-option
                             v-for="item in typeList"
                             :key="item['type_id']"
@@ -25,9 +23,7 @@
 
                 </div>
                 <div class="div2" v-if="seriesList.length > 0">
-                    <label>选择大类: </label>
-
-                    <el-select v-model="blogSeries" placeholder="请选择">
+                    <el-select v-model="blogSeries" placeholder="选择大类">
                         <el-option
                             v-for="item in seriesList"
                             :key="item['series_id']"
