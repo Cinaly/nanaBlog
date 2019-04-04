@@ -21,9 +21,6 @@
     }
     .footer-box{
         height: 30px;
-        * {
-            height: 30px;
-        }
         .div1,.div2{
             display: inline-block;
             margin-right: 30px;
@@ -31,6 +28,5 @@
     }
     .btn-submit{
         float: right;
-        padding: 0 30px;
     }
 }

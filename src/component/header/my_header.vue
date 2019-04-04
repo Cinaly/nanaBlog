@@ -30,26 +30,10 @@
                 a {
                     color: #333
                 }
-                .search-box {
+                .el-input{
                     width: 160px;
-                    height: 26px;
-                    display: inline-block;
-                    border: 1px solid #CCC;
-                    border-radius: 4px;
                     position: absolute;
-                    right: 140px;
-                    top: 17px;
-                    input {
-                        border: none;
-                        position: absolute;
-                        width: 140px;
-                        color: #4d4d4d;
-                        box-sizing: border-box;
-                        background: none;
-                        line-height: 26px;
-                        padding: 0 10px;
-                        outline: none;
-                    }
+                    right: 120px;
                 }
                 .write-box {
                     float: right;
@@ -67,9 +51,10 @@
             .search-result {
                 width: 285px;
                 position: absolute;
-                top: 53px;
+                top: 60px;
                 right: 76px;
                 background: #fff;
+                border-radius: 3px;
                 z-index: 100;
                 -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
                 box-shadow: 0px 1px 9px -1px rgba(0, 0, 0, 1);
@@ -104,15 +89,13 @@
         <div class="navbox">
             <div class="logo">
                 <a href="javascript:;" @click="goPage('index')">nana博客</a>
-                <div class="search-box" v-if="canWrite">
-                    <input type="text" placeholder="搜一搜" v-model="searchkey">
-                    <svg style="position: absolute;right: 0;" id="sousuo" viewBox="0 0 1024 1024" width="26"
-                         height="26">
-                        <path
-                            d="M719.6779726 653.55865555l0.71080936 0.70145709 191.77828505 191.77828506c18.25658185 18.25658185 18.25658185 47.86273439 0 66.12399318-18.26593493 18.26125798-47.87208744 18.26125798-66.13334544 0l-191.77828505-191.77828506c-0.2338193-0.2338193-0.4676378-0.4676378-0.69678097-0.71081014-58.13206223 44.25257003-130.69075187 70.51978897-209.38952657 70.51978894C253.06424184 790.19776156 98.14049639 635.27869225 98.14049639 444.17380511S253.06424184 98.14049639 444.16912898 98.14049639c191.10488633 0 346.02863258 154.92374545 346.02863259 346.02863259 0 78.6987747-26.27189505 151.25746514-70.51978897 209.38952657z m-275.50884362 43.11621045c139.45428506 0 252.50573702-113.05145197 252.50573702-252.50573702s-113.05145197-252.50573702-252.50573702-252.50573783-252.50573702 113.05145197-252.50573783 252.50573783 113.05145197 252.50573702 252.50573783 252.50573702z"
-                            fill="#ccc"></path>
-                    </svg>
-                </div>
+                <el-input
+                    v-if="canWrite"
+                    placeholder="搜一搜"
+                    prefix-icon="el-icon-search"
+                    v-model="searchkey">
+                </el-input>
+
                 <div class="write-box" v-if="canWrite" @click="goPage('writeArticle')">
                     <svg id="xieboke1" style="position: relative;top:3px;" viewBox="0 0 1024 1024" width="20px"
                          height="20px">
@@ -123,7 +106,7 @@
                     <a href="javascript:;" class="btn-gowrite">写博客</a>
                 </div>
             </div>
-            <div class="search-result" v-if="list.length > 0">
+            <div class="search-result" v-if="list.length > 0 && searchkey">
                 <ul>
                     <li @click="jumpWithParams('/articleDetail', item['article_id'])" v-for="item in list">{{item.title}}</li>
                 </ul>

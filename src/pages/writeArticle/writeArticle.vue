@@ -3,24 +3,41 @@
         <my-header></my-header>
         <div class="write-container">
             <div class="title-box">
-                <span>标题: </span><input type="text" v-model="title">
+                <el-input
+                    placeholder="请输入标题"
+                    v-model="title"
+                    clearable>
+                </el-input>
             </div>
             <mavon-editor v-model="content" :toolbars="toolbars" @keydown=""/>
             <div class="footer-box">
                 <div class="div1" v-if="typeList.length > 0">
-                    <label for="selectType">选择文章类型: </label>
-                    <select name="selectType" id="selectType" v-model="blogType">
-                        <option :value="item['type_id']" v-for="item in typeList">{{item['type_name']}}</option>
-                    </select>
+                    <label>选择文章类型: </label>
+
+                    <el-select v-model="blogType" placeholder="请选择">
+                        <el-option
+                            v-for="item in typeList"
+                            :key="item['type_id']"
+                            :label="item['type_name']"
+                            :value="item['type_id']">
+                        </el-option>
+                    </el-select>
+
                 </div>
                 <div class="div2" v-if="seriesList.length > 0">
-                    <label for="selectSeries">选择大类: </label>
-                    <select name="selectSeries" id="selectSeries"
-                            v-model="blogSeries">
-                        <option :value="item['series_id']" v-for="item in seriesList">{{item['series_name']}}</option>
-                    </select>
+                    <label>选择大类: </label>
+
+                    <el-select v-model="blogSeries" placeholder="请选择">
+                        <el-option
+                            v-for="item in seriesList"
+                            :key="item['series_id']"
+                            :label="item['series_name']"
+                            :value="item['series_id']">
+                        </el-option>
+                    </el-select>
+
                 </div>
-                <button class="btn-submit" @click="submitArticle()">提交</button>
+                <el-button class="btn-submit" @click="submitArticle()">提交</el-button>
             </div>
         </div>
     </div>
@@ -152,10 +169,6 @@
         }
     }
 </script>
-
-<style scoped>
-    @import '../../assets/base.css';
-</style>
 
 <style lang="scss" scoped>
     html, body, #app {

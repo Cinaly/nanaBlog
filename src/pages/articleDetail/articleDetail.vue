@@ -5,7 +5,7 @@
             <div class="title-box">
                 <span>{{articleDetail.title}} </span>
                 <div>
-                    <a class="delete-btn" href="javascript:;" @click="deleteArticle()">删除</a>
+                    <a class="delete-btn" href="javascript:;" @click="dialogVisible = true">删除</a>
                     <a class="edit-btn" href="javascript:;" @click="jumpWithParams('/writeArticle', articleId)">编辑</a>
                 </div>
             </div>
@@ -19,6 +19,17 @@
                 :scrollStyle="prop.scrollStyle"
             ></mavon-editor>
         </div>
+        <el-dialog
+            title="提示"
+            :visible.sync="dialogVisible"
+            width="30%"
+            :before-close="handleClose">
+            <span>确定删除此博文？</span>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="deleteArticle()">确 定</el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 
@@ -34,7 +45,8 @@
         data() {
             return {
                 articleDetail: '',
-                articleId: ''
+                articleId: '',
+                dialogVisible: false
             }
         },
         created() {
@@ -70,6 +82,7 @@
                 });
             },
             deleteArticle() {
+                this.dialogVisible = false;
                 var articleId = this.articleId;
                 axios.get('http://172.31.11.221:3333/api/deleteArticle', {
                     params: {
