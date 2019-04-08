@@ -102,8 +102,8 @@
                     var articleDetail = res.data['articleDetail'][0];
                     this.title = articleDetail['title'];
                     this.content = articleDetail['content'];
-                    this.blogType = articleDetail['series_id'];
-                    this.blogSeries = articleDetail['type_id'];
+                    this.blogSeries = articleDetail['series_id'];
+                    this.blogType = articleDetail['type_id'];
                     console.log('-----', this.articleDetail);
                 }).catch((err) => {
                     console.log(err);
