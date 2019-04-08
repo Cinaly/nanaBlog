@@ -36,6 +36,7 @@
 <script>
     import axios from 'axios';
     import myHeader from '@/component/header/my_header';
+    import {HOST} from '@/host/index';
 
     export default {
         name: 'writeArticle',
@@ -70,7 +71,7 @@
         methods: {
             getArticleDetail() {
                 var articleId = this.articleId;
-                axios.get('http://172.31.11.221:3333/api/getArticleDetail', {
+                axios.get(HOST['CONFIG_URL_API'] + '/api/getArticleDetail', {
                     params: {
                         'articleId': articleId
                     }
@@ -84,7 +85,7 @@
             deleteArticle() {
                 this.dialogVisible = false;
                 var articleId = this.articleId;
-                axios.get('http://172.31.11.221:3333/api/deleteArticle', {
+                axios.get(HOST['CONFIG_URL_API'] + '/api/deleteArticle', {
                     params: {
                         'articleId': articleId
                     }

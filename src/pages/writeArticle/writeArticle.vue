@@ -42,6 +42,7 @@
 <script>
     import axios from 'axios';
     import myHeader from '@/component/header/my_header';
+    import {HOST} from '@/host/index';
 
     export default {
         name: 'writeArticle',
@@ -94,7 +95,7 @@
         },
         methods: {
             getArticleDetail(articleId) {
-                axios.get('http://172.31.11.221:3333/api/getArticleDetail', {
+                axios.get(HOST['CONFIG_URL_API'] + '/api/getArticleDetail', {
                     params: {
                         'articleId': articleId
                     }
@@ -128,9 +129,9 @@
                 }
 
                 var params = new URLSearchParams();
-                var urlStr = 'http://172.31.11.221:3333/api/writeArticle';
+                var urlStr = HOST['CONFIG_URL_API'] + '/api/writeArticle';
                 if (this.articleId) {
-                    urlStr = 'http://172.31.11.221:3333/api/updateArticle';
+                    urlStr = HOST['CONFIG_URL_API'] + '/api/updateArticle';
                     params.append('article_id', this.articleId);
                 }
 
@@ -148,13 +149,13 @@
 
             },
             getTypeList() {
-                axios.get('http://172.31.11.221:3333/api/getBlogType').then((res) => {
+                axios.get(HOST['CONFIG_URL_API'] + '/api/getBlogType').then((res) => {
                     console.log('-----', res.data);
                     this.typeList = res.data['list'];
                 });
             },
             getSeriesList() {
-                axios.get('http://172.31.11.221:3333/api/getBlogSeries').then((res) => {
+                axios.get(HOST['CONFIG_URL_API'] + '/api/getBlogSeries').then((res) => {
                     console.log('-----', res.data);
                     this.seriesList = res.data['list'];
                 });
