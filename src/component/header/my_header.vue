@@ -108,7 +108,7 @@
             </div>
             <div class="search-result" v-if="list.length > 0 && searchkey">
                 <ul>
-                    <li @click="jumpWithParams('/articleDetail', item['article_id'])" v-for="item in list">{{item.title}}</li>
+                    <li @click="jumpWithParams('/articleDetail', item['article_id'], fromWhich)" v-for="item in list">{{item.title}}</li>
                 </ul>
             </div>
         </div>
@@ -122,21 +122,30 @@
 
     export default {
         name: 'my-header',
-        props: ['canWrite'],
+        props: ['canWrite', 'fromWhich'],
+        inject: ['reload'],
         data() {
             return {
                 list: [],
                 searchkey: ''
             }
         },
+        mounted(){
+            console.log(this.fromWhich);
+        },
         methods: {
-            jumpWithParams(path, value) {
+            jumpWithParams(path, value, fromWhich) {
+                if(fromWhich == 'articleDetail') {
+                    console.log(111, fromWhich);
+                    this.reload();
+                }
                 this.$router.push({
                     path: path,
                     query: {
                         id: value
                     }
                 });
+
             },
             goPage(whichPage) {
                 this.$router.push(whichPage);

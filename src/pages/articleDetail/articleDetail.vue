@@ -1,6 +1,6 @@
 <template>
     <div class="articlewrite-container">
-        <my-header canWrite="true"></my-header>
+        <my-header canWrite="true" fromWhich="articleDetail"></my-header>
         <div class="write-container">
             <div class="title-box">
                 <span>{{articleDetail.title}} </span>

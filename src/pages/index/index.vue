@@ -5,7 +5,8 @@
             <!--lbox begin-->
             <div class="lbox">
                 <div class="zhuanti whitebg" v-for="(itemList,key) in allData" v-if="itemList.length>0">
-                    <h2 class="htitle"><span class="hnav"><a href="javascript:;" @click="jumpWithParams('/articleForSeriesList', itemList[0]['series_id'])">更多</a></span>{{itemList[0]['series_name']}}
+                    <h2 class="htitle"><span class="hnav"><a href="javascript:;"
+                                                             @click="jumpWithParams('/articleForSeriesList', itemList[0]['series_id'])">更多</a></span>{{itemList[0]['series_name']}}
                     </h2>
                     <ul>
                         <li v-for="item in itemList">
@@ -16,7 +17,8 @@
                             </i>
                             <b>{{item.title}}</b>
                             <span>{{item.content}}</span>
-                            <a href="javascript:;" class="readmore" @click="jumpWithParams('/articleDetail', item['id'])">文章阅读</a>
+                            <a href="javascript:;" class="readmore"
+                               @click="jumpWithParams('/articleDetail', item['id'])">文章阅读</a>
                         </li>
                     </ul>
                 </div>
@@ -97,22 +99,16 @@
                     <h2 class="htitle">文章分类</h2>
                     <section class="topnews imgscale"><img src="../../assets/images/h1.jpg"></section>
                     <ul>
-                        <li v-for="item in typeList"><i></i><a href="javascript:;" @click="jumpWithParams('/articleForTypeList', item['type_id'])">{{item['type_name']}}</a></li>
+                        <li v-for="item in typeList"><i></i><a href="javascript:;"
+                                                               @click="jumpWithParams('/articleForTypeList', item['type_id'])">{{item['type_name']}}</a>
+                        </li>
                     </ul>
                 </div>
 
                 <div class="whitebg cloud">
                     <h2 class="htitle">标签云</h2>
                     <ul>
-                        <a href="" target="_blank">标签1</a>
-                        <a href="" target="_blank">标签1</a>
-                        <a href="" target="_blank">标签1</a>
-                        <a href="" target="_blank">标签1</a>
-                        <a href="" target="_blank">标签1</a>
-                        <a href="" target="_blank">标签1</a>
-                        <a href="" target="_blank">标签1</a>
-                        <a href="" target="_blank">标签1</a>
-                        <a href="" target="_blank">标签1</a>
+                        <a v-for="item in tagList" href="javascript:;">{{item['tag_name']}}</a>
                     </ul>
                 </div>
 
@@ -134,13 +130,14 @@
 
     export default {
         name: 'index',
-        components:{
+        components: {
             myHeader
         },
         data() {
             return {
                 allData: [],
                 typeList: [],
+                tagList: [],
                 imgLists: ['1', '2', '3', '4',
                     'b01', 'b02', 'b03', 'b04', 'b05',
                     'h1', 'h2',
@@ -151,6 +148,7 @@
         created() {
             this.getArticleList();
             this.getTypeList();
+            this.getTagList();
         },
         mounted() {
         },
@@ -178,6 +176,12 @@
             },
             goWritePage() {
                 this.$router.push('writeArticle');
+            },
+            getTagList() {
+                axios.get(HOST['CONFIG_URL_API'] + '/api/getTags').then((res) => {
+                    console.log('-----', res.data);
+                    this.tagList = res.data['list'];
+                });
             },
             getRandomImg() {
                 var min = Math.ceil(1);

@@ -160,7 +160,16 @@ router.get('/deleteArticle', (req, res) => {
 });
 
 router.get('/getTags', (req, res) => {
-
+    const sqlStr = 'select * from blog_tag';
+    conn.query(sqlStr, (err, results) => {
+        if (err) return res.json({err_code: 1, message: '获取失败', err: err});
+        res.json({
+            err_code: 0,
+            message: '获取成功',
+            list: results,
+            affectedRows: 0
+        });
+    });
 });
 
 module.exports = router;
