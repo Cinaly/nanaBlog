@@ -1,0 +1,12 @@
+{
+  "manifest_version": 2,
+  "name": "createJsonFromXLSX",
+  "version": "1.0.0",
+  "description": "createJsonFromXLSX",
+  "browser_action": {
+    "default_icon": "images/icon.png",
+    "default_title": "createJsonFromXLSX",
+    "default_popup": "popup.html"
+  },
+  "permissions": ["contextMenus", "tabs"]
+}
